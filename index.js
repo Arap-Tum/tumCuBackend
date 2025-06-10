@@ -7,6 +7,7 @@ dbConnect();
 const app = express();
 
 const mediaRouter = require("./routes/mediaRoutes.js");
+const booksRouter = require("./routes/booksRoute.js");
 
 // Midleware
 app.use(express.json());
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/media", mediaRouter);
+app.use("/api/books", booksRouter);
 
 // serve
 const PORT = process.env.PORT || 5001;

@@ -52,8 +52,88 @@ const getAllMediaItem = async (req, res) => {
     });
   }
 };
+// ✅ Get media item by ID
+const getMediaItemById = async (req, res) => {
+  try {
+    const mediaItem = await Media.findById(req.params.id);
+    if (!mediaItem) {
+      return res.status(404).json({ error: "Media item not found" });
+    }
+    return res.status(200).json(mediaItem);
+  } catch (error) {
+    return res.status(500).json({
+      error: "Failed to get media item",
+      details: error.message,
+    });
+  }
+};
+
+// UPDATE MEDIA ITEM
+const updateMediaItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updateData = {
+      title: req.body.title,
+      link: req.body.link,
+      type: req.body.type,
+    };
+
+    if (req.file) {
+      const newImageUrl = await processAndUploadImage(req.file.buffer);
+      updateData.cover = newImageUrl;
+    }
+
+    const updatedItem = await Media.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedItem) {
+      return res.status(404).json({ error: "Media item not found" });
+    }
+
+    return res.status(200).json({
+      message: "Media item updated successfully",
+      mediaItem: updatedItem,
+    });
+  } catch (error) {
+    console.log(`Update error: ${error}`);
+    return res.status(500).json({
+      error: "Something went wrong with updating the media item",
+      details: error.message,
+    });
+  }
+};
+
+// Delte media Item
+const deleteMediaItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedItem = await Media.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).json({ error: "Media item not found" });
+    }
+
+    return res.status(200).json({
+      message: "Media item deleted successfully",
+      mediaItem: deletedItem,
+    });
+  } catch (error) {
+    console.log(`Delete error: ${error}`);
+    return res.status(500).json({
+      error: "Something went wrong with deleting the media item",
+      details: error.message,
+    });
+  }
+};
 
 module.exports = {
   addMediaItem,
   getAllMediaItem,
+  getMediaItemById,
+  updateMediaItem,
+  deleteMediaItem,
 };

@@ -5,13 +5,15 @@ const dbConnect = require("./config/dbConnect.js");
 dbConnect();
 
 const app = express();
-
-const mediaRouter = require("./routes/mediaRoutes.js");
-const booksRouter = require("./routes/booksRoute.js");
-
 // Midleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Import routes
+const mediaRouter = require("./routes/mediaRoutes.js");
+const booksRouter = require("./routes/booksRoute.js");
+const leadersRouter = require("./routes/leadersRoutes.js");
+const FLeadersRouter = require("./routes/FLeadersRoutes.js");
 
 // Welcome to the page
 app.get("/", (req, res) => {
@@ -21,6 +23,8 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/media", mediaRouter);
 app.use("/api/books", booksRouter);
+app.use("/api/leaders", leadersRouter);
+app.use("/api/formerLeaders", FLeadersRouter);
 
 // serve
 const PORT = process.env.PORT || 5001;

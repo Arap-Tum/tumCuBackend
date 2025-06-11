@@ -12,8 +12,7 @@ const addBook = async (req, res) => {
       !req.body.title ||
       !req.body.author ||
       !req.body.category ||
-      !req.body.description ||
-      !req.body.cover
+      !req.body.description
     ) {
       return res.status(400).json({ error: "All fields are required" });
     }

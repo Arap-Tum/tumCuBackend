@@ -12,8 +12,7 @@ const addLeader = async (req, res) => {
       !req.body.name ||
       !req.body.position ||
       !req.body.year ||
-      !req.body.course ||
-      !req.body.cover
+      !req.body.course
     ) {
       return res.status(400).json({ error: "All fields are required" });
     }
@@ -104,7 +103,7 @@ const updateLeader = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: "book item updated successfully",
+      message: "item updated successfully",
       book: updatedItem,
     });
   } catch (error) {

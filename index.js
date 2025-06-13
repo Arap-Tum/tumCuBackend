@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const dbConnect = require("./config/dbConnect.js");
+const cors = require("cors");
 
 dbConnect();
 
@@ -14,6 +15,9 @@ const mediaRouter = require("./routes/mediaRoutes.js");
 const booksRouter = require("./routes/booksRoute.js");
 const leadersRouter = require("./routes/leadersRoutes.js");
 const FLeadersRouter = require("./routes/FLeadersRoutes.js");
+
+// tu be accesed with any front end
+app.use(cors());
 
 // Welcome to the page
 app.get("/", (req, res) => {

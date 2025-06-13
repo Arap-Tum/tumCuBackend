@@ -19,6 +19,8 @@ const FLeadersRouter = require("./routes/FLeadersRoutes.js");
 // tu be accesed with any front end
 app.use(cors());
 
+// app.use(cors({ origin: ['https://your-frontend.com', 'http://localhost:3000'] }));
+
 // Welcome to the page
 app.get("/", (req, res) => {
   res.send("Hello and welcome");

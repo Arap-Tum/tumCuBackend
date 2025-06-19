@@ -22,7 +22,7 @@ const membersSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    ministy: {
+    ministry: {
       type: String,
       required: false,
     },

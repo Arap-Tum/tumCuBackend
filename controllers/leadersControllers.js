@@ -1,7 +1,7 @@
 const processAndUploadImage = require("../middlewares/sharp.js");
 const Leader = require("../models/leaders.js");
 
-// ADD NEW Library book ITEM
+// ADD NEW leader ITEM
 const addLeader = async (req, res) => {
   try {
     if (!req.file) {
@@ -76,7 +76,7 @@ const getLeaderById = async (req, res) => {
   }
 };
 
-// UPDATE MEDIA ITEM
+// UPDATE LEADER ITEM
 const updateLeader = async (req, res) => {
   try {
     const { id } = req.params;
@@ -115,7 +115,7 @@ const updateLeader = async (req, res) => {
   }
 };
 
-// Delte media Item
+// Delte Item
 const deleteLeader = async (req, res) => {
   try {
     const { id } = req.params;
@@ -128,7 +128,7 @@ const deleteLeader = async (req, res) => {
 
     return res.status(200).json({
       message: " item deleted successfully",
-      book: deletedItem,
+      data: deletedItem,
     });
   } catch (error) {
     console.log(`Delete error: ${error}`);

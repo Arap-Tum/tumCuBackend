@@ -8,13 +8,14 @@ dbConnect();
 const app = express();
 // Midleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Import routes
 const mediaRouter = require("./routes/mediaRoutes.js");
 const booksRouter = require("./routes/booksRoute.js");
 const leadersRouter = require("./routes/leadersRoutes.js");
 const FLeadersRouter = require("./routes/FLeadersRoutes.js");
+const membersRouter = require("./routes/membersRoutes.js");
 
 // tu be accesed with any front end
 app.use(cors());
@@ -31,6 +32,7 @@ app.use("/api/media", mediaRouter);
 app.use("/api/books", booksRouter);
 app.use("/api/leaders", leadersRouter);
 app.use("/api/formerLeaders", FLeadersRouter);
+app.use("/api/members", membersRouter);
 
 // serve
 const PORT = process.env.PORT || 5001;

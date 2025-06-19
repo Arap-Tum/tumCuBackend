@@ -7,16 +7,18 @@ const addMember = async (req, res) => {
     if (!req.body.name || !req.body.phone) {
       return res
         .status(400)
-        .json({ error: "name and phone numberis required" });
+        .json({ error: "name and phone number is required" });
     }
+
+    console.log("BODY:", req.body);
 
     const newMember = new Member({
       name: req.body.name,
-      name: req.body.reg,
-      name: req.body.phone,
-      name: req.body.course,
-      name: req.body.residence,
-      name: req.body.ministry,
+      reg: req.body.reg,
+      phone: req.body.phone,
+      course: req.body.course,
+      residence: req.body.residence,
+      ministry: req.body.ministry,
     });
 
     await newMember.save();
@@ -25,7 +27,7 @@ const addMember = async (req, res) => {
       data: newMember,
     });
   } catch (error) {
-    console.log(`This id the error: ${error}`);
+    console.log(`This addd the error: ${error}`);
     return res.status(500).json({
       error: "something went wrong with adding",
       detail: error.message,

@@ -10,7 +10,7 @@ const addMember = async (req, res) => {
         .json({ error: "name and phone number is required" });
     }
 
-    console.log("BODY:", req.body);
+    // console.log("BODY:", req.body);
 
     const newMember = new Member({
       name: req.body.name,

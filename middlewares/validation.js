@@ -141,6 +141,7 @@ const validateQuery = [
     .withMessage("Sort order must be asc or desc"),
 ];
 
+// Validate  rules creating numbers
 module.exports = {
   validateCreateRequest,
   validateUpdateRequest,

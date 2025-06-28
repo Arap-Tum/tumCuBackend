@@ -4,6 +4,11 @@ const multer = require("multer");
 const upload = multer();
 
 const {
+  validateAddingMember,
+  validateUpdateMember,
+} = require("../middlewares/membersValidation.js");
+
+const {
   addMember,
   getMembers,
   getMemberById,
@@ -11,10 +16,10 @@ const {
   deleteMember,
 } = require("../controllers/membersControllers.js");
 
-router.post("/", upload.none(), addMember);
+router.post("/", upload.none(), validateAddingMember, addMember);
 router.get("/", getMembers);
 router.get("/:id", getMemberById);
-router.put("/:id", upload.none(), updateMember);
+router.put("/:id", upload.none(), validateUpdateMember, updateMember);
 router.delete("/:id", deleteMember);
 
 module.exports = router;

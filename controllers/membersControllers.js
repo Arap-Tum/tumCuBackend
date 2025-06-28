@@ -1,34 +1,52 @@
 const Member = require("../models/members.js");
+const { validationResult } = require("express-validator");
 
 // add new Member
 
 const addMember = async (req, res) => {
   try {
-    if (!req.body.name || !req.body.phone) {
-      return res
-        .status(400)
-        .json({ error: "name and phone number is required" });
+    // check for validation errors
+    const errorrs = validationResult(req);
+    const messages = errorrs
+      .array()
+      .map((err) => err.msg)
+      .join("; ");
+    if (!errorrs.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: messages,
+        errorrs: errorrs.array(),
+      });
     }
 
-    // console.log("BODY:", req.body);
+    const { name, reg, phone, course, residence, ministry } = req.body;
+
+    // check if the phone number aleady exists
+    const existingMember = await Member.findOne({ phone });
+    if (existingMember) {
+      return res.status(409).json({
+        sucess: false,
+        message: "A member with this phone numbers already exist  ",
+      });
+    }
 
     const newMember = new Member({
-      name: req.body.name,
-      reg: req.body.reg,
-      phone: req.body.phone,
-      course: req.body.course,
-      residence: req.body.residence,
-      ministry: req.body.ministry,
+      name,
+      reg,
+      phone,
+      course,
+      residence,
+      ministry,
     });
 
     await newMember.save();
     return res.status(201).json({
-      message: "the member is saved succesfully",
+      message: "Meber saved succesfully",
       data: newMember,
     });
   } catch (error) {
     console.log(`This addd the error: ${error}`);
-    return res.status(500).json({
+    return res.status(400).json({
       error: "something went wrong with adding",
       detail: error.message,
     });
@@ -75,6 +93,20 @@ const getMemberById = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
+    // check for validation errors
+    const errorrs = validationResult(req);
+    const messages = errorrs
+      .array()
+      .map((err) => err.msg)
+      .join("; ");
+    if (!errorrs.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: messages,
+        errorrs: errorrs.array(),
+      });
+    }
+
     const { id } = req.params;
 
     const updateData = {
